@@ -58,7 +58,7 @@ class MiejsceDlaNiepelnosprawnych(MiejsceTeatralne):   # miejsca dla niepełnosp
 
 class Rezerwacja:
 
-    licznik_id = 1          # unikalny ID rezerwacji (działa)
+    licznik_id = 1          # unikalny ID rezerwacji (sprawdzić)
 
     def __init__(self, klient, miejsce):
         self.id_rezerwacji = Rezerwacja.licznik_id
@@ -90,7 +90,7 @@ class Klient:
     licznik_id = 1  # unikalny ID klienta (działa)
 
     def __init__(self, imie, nazwisko):
-        self.indetyfikator = Klient.licznik_id
+        self.identyfikator = Klient.licznik_id
         Klient.licznik_id += 1
 
         self.imie = imie
@@ -100,5 +100,24 @@ class Klient:
     def dodaj_rezerwacje(self, rezerwacje): #dodawanie rezerwacji
         self.rezerwacje.append(rezerwacje)
 
+    def usun_rezerwacje(self, id_rezerwacji):   #usuwanie rezerwacji
+        for rez in self.rezerwacje:
+            if rez.id_rezerwacji == id_rezerwacji:
+                rez.anuluj()
+                return True
+        return False
+
+    def get_historia(self):     # sprawdzenie czy pusta i histpria rezerwacji
+        if not self.rezerwacje:
+            return f"Klient {self.imie} {self.nazwisko} nie ma żadnych rezerwacji."
+
+        historia = f"\n--- {self.imie} {self.nazwisko} nie ma żadnych rezerwacji ---\n "
+        for rez in self.rezerwacje:
+            historia += rez.get_info()
+            historia += "\n"
+        return historia
+
+    def get_info(self):         # informacje o kliencie
+        return f"ID: {self.identyfikator}, Imię: {self.imie}, Nazwisko: {self.nazwisko}"
 
 

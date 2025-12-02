@@ -77,14 +77,17 @@ class Rezerwacja:
         return f"""
         ID rezerwacji: {self.id_rezerwacji}
         Klient: {self.klient.imie} {self.klient.nazwisko}
-        Miejsce: {self.miejsce.cena} zł
+        Miejsce: {self.miejsce.cena} zł ({self.miejsce.typ})
         Data rezerwacji: {self.data_rezerwacji.strftime("%Y-%m-%d %H:%M")}
         Status: {self.status.upper()}
         """
 
 # print(datetime.now())
 # print(datetime.now().strftime("%Y-%m-%d %H:%M"))
+
 #TODO Klasa klient
+
+
 class Klient:
 
     licznik_id = 1  # unikalny ID klienta (działa)
@@ -107,7 +110,7 @@ class Klient:
                 return True
         return False
 
-    def get_historia(self):     # sprawdzenie czy pusta i histpria rezerwacji
+    def get_historia(self):     # sprawdzenie czy pusta, historria rezerwacji
         if not self.rezerwacje:
             return f"Klient {self.imie} {self.nazwisko} nie ma żadnych rezerwacji."
 

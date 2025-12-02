@@ -44,7 +44,7 @@ class Teatr:
             print("Brak miejsc w tearze.")
             return
 
-        print("\n" + "=" * 60)
+        print("\n" + "-" * 60)
         print(f"WSZYSTKIE MIEJSCA TEATRU '{self.nazwa}'")
         print("-" * 60)
         for miejsce in self.miejsca:
@@ -76,7 +76,55 @@ class Teatr:
 
         return True
 
+
     #TODO Anulowanie po ID
 
     def anuluj_rezerwacje(self, id_rezerwacji):
+        for rezerwacja in self.rezerwacje:
+            if rezerwacja.id_rezerwacji == id_rezerwacji and rezerwacja.status == "aktywna":
+                rezerwacja.miejsce.zwolnij()
+                rezerwacja.anuluj()
+
+                print(f"\n REZERWACJA ANULOWANA")
+                print(f"   ID rezerwacji: {id_rezerwacji}")
+                print(f"   Miejsce: {rezerwacja.miejsce.numer_miejsca}")
+                print(f"   Zwrot: {rezerwacja.miejsce.cena} zł\n")
+
+                return True
+        print(f" BŁĄD: Rezerwacja {id_rezerwacji} nie znaleziona lub już anulowana.")
+        return False
+
+    def historia_rezerwacji(self, klient):
+        print(klient.get_historia())
+
+    #TODO miejsca w tearze i aktywne rezerwacje, informacja dla klienta, wyświelanie dla klienta
+
+    def pokaz_statystyki(self):
+        calkowita = len(self.miejsca)
+
+        # Ile rezerwacji jest aktywnych
+        aktywne_rezerwacje = sum(1 for r in self.rezerwacje if r.status == "aktywna")
+
+        # Miejsca zarezerwowane = liczba aktywnych rezerwacji
+        zarezerwowane = aktywne_rezerwacje
+
+        # Miejsca dostępne = wszystkie miejsca - zarezerwowane
+        dostepne = calkowita - zarezerwowane
+
+        # dostepne = sum(1 for r in self.rezerwacje if r.status == "aktywna")
+        # zarezerwowane = calkowita - dostepne
+        # aktywne_rezerwacje = sum(1 for r in self.rezerwacje if r.status == "aktywna")
+
+        print("\n" + "-" * 60)
+        print("STATYSTYKI TEATRU")
+        print("-" * 60)
+        print(f" Całkowita liczba mniejsc: {calkowita}")
+        print(f" Miejsca dostępne: {dostepne}")
+        print(f" Miejsca zarezerwowane: {zarezerwowane}")
+        print(f" Aktywne rezerwacje: {aktywne_rezerwacje}")
+        print(f" Procent zapełnienia teatru: {(zarezerwowane/calkowita)*100:.1f}%")
+        print("-" * 60)
+
+
+
 
